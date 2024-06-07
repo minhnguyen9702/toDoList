@@ -8,31 +8,44 @@
 </head>
 
 <body>
-
     <table id="tableHeader">
         <tr>
             <td>Title</td>
-            <td>Due Date</td>
+            <td>Priority</td>
+            <td>DueDate</td>
             <td></td>
             <td></td>
         </tr>
     </table>
     <table id="tasksTable">
     </table>
-
     <button id="addTask">+</button>
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <ul>
+            <ul id="modalList">
                 <li>
                     <label for="title">Title</label>
-                    <input type="text" id="title" name="title" placeholder=" ">
+                    <input type="text" id="title" name="title" placeholder="">
                 </li>
                 <li>
-                    <label for="des">Description</label>
-                    <input type="text" id="author" name="author" placeholder=" ">
+                    <label for="priority">Priority</label>
+                    <select id="priority" name="priority">
+                        <option value="" selected disabled> </option>
+                        <option value="high">High</option>
+                        <option value="medium">Medium</option>
+                        <option value="low">Low</option>
+                    </select>
                 </li>
+                <li>
+                    <label for="date">Date</label>
+                    <input type="date" id="datePicker">
+                </li>
+                <li>
+                    <label for="desc">Description</label>
+                    <textarea id="desc" name="desc" rows="5" cols="35" placeholder=""></textarea>
+                </li>
+                <button id="submitTask">Add Task</button>
             </ul>
         </div>
     </div>
