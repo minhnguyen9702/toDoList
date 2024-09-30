@@ -1,6 +1,7 @@
 import { Task } from "./task";
 
 const tasks = []
+let editTaskIndex = -1;
 
 export function setupTasksModal() {
   var modal = document.getElementById("myModal");
@@ -18,6 +19,7 @@ export function setupTasksModal() {
     priorityInput.value = "";
     dateInput.value = "";
     descInput.value = "";
+    editTaskIndex = -1
   }
 
   span.onclick = function () {
@@ -32,8 +34,13 @@ export function setupTasksModal() {
       priorityInput.value,
     )
 
-    tasks.push(newTask);
-    console.log("New Task Created: ", newTask);
+    if (editTaskIndex >= 0) {
+      tasks[editTaskIndex] = newTask;
+      console.log("Task Edited: ", newTask);
+    } else {
+      tasks.push(newTask);
+      console.log("New Task Created: ", newTask);
+    }
     console.log("Current Tasks: ", tasks);
     renderTasks();
 
@@ -42,6 +49,7 @@ export function setupTasksModal() {
     priorityInput.value = "";
     dateInput.value = "";
     descInput.value = "";
+    editTaskIndex = -1
   }
 
   window.onclick = function (event) {
@@ -72,13 +80,47 @@ function renderTasks() {
     row.appendChild(dateCell);
 
     const editCell = document.createElement("td");
-    editCell.innerHTML = '<button class="edit-task">Edit</button>';
+    const editButton = document.createElement("Button");
+    editButton.textContent = "Edit";
+    editButton.classList.add("edit-task");
+    editButton.onclick = function () {
+      openEditModal(i)
+    };
+    editCell.appendChild(editButton)
     row.appendChild(editCell);
 
     const deleteCell = document.createElement("td");
-    deleteCell.innerHTML = '<button class="delete-task">Delete</button>';
+    const deleteButton = document.createElement("Button");
+    deleteButton.textContent = "Delete";
+    deleteButton.classList.add("delete-task");
+    deleteButton.onclick = function () {
+      deleteTask(i)
+    }
+    deleteCell.appendChild(deleteButton);
     row.appendChild(deleteCell);
 
     taskTable.appendChild(row);
   }
+}
+
+function openEditModal(index) {
+  var task = tasks[index]
+  var modal = document.getElementById("myModal");
+  var titleInput = document.getElementById("title");
+  var priorityInput = document.getElementById("priority");
+  var dateInput = document.getElementById("dateInput");
+  var descInput = document.getElementById("desc");
+
+  titleInput.value = task.getTitle();
+  priorityInput.value = task.getPriority();
+  dateInput.value = task.getDueDate();
+  descInput.value = task.getDesc();
+  editTaskIndex = index;
+
+  modal.style.display = "block";
+}
+
+function deleteTask(index) {
+  tasks.splice(index, 1);
+  renderTasks();
 }
