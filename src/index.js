@@ -1,30 +1,7 @@
-import "./style.css"
-import { initializeModal } from './modal';
+import "./style.css";
+import { initializeModal } from './modal.js';
+import Task from './task.js';
 
 initializeModal();
 
-class Task {
-    constructor(title, desc, dueDate, priority) {
-        this.title = title;
-        this.desc = desc;
-        this.dueDate = dueDate,
-        this.priority = priority;
-    }
-
-    getTitle() {
-        return this.title;
-    }
-
-    getDesc() {
-        return this.desc;
-    }
-
-    getDueDate() {
-        return this.dueDate;
-    }
-
-    getPriority() {
-        return this.priority;
-    }
-}
-
+const submitTaskButton = document.getElementById('submitTask');
