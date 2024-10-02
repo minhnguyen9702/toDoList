@@ -27,29 +27,31 @@ export function setupTasksModal() {
   }
 
   submit.onclick = function () {
-    const newTask = new Task(
-      titleInput.value,
-      descInput.value,
-      dateInput.value,
-      priorityInput.value,
-    )
-
-    if (editTaskIndex >= 0) {
-      tasks[editTaskIndex] = newTask;
-      console.log("Task Edited: ", newTask);
-    } else {
-      tasks.push(newTask);
-      console.log("New Task Created: ", newTask);
+    if (titleInput.value != "" && priorityInput.value != "" && dateInput != "") {
+      const newTask = new Task(
+        titleInput.value,
+        descInput.value,
+        dateInput.value,
+        priorityInput.value,
+      )
+  
+      if (editTaskIndex >= 0) {
+        tasks[editTaskIndex] = newTask;
+        console.log("Task Edited: ", newTask);
+      } else {
+        tasks.push(newTask);
+        console.log("New Task Created: ", newTask);
+      }
+      console.log("Current Tasks: ", tasks);
+      renderTasks();
+  
+      modal.style.display = "none";
+      titleInput.value = "";
+      priorityInput.value = "";
+      dateInput.value = "";
+      descInput.value = "";
+      editTaskIndex = -1
     }
-    console.log("Current Tasks: ", tasks);
-    renderTasks();
-
-    modal.style.display = "none";
-    titleInput.value = "";
-    priorityInput.value = "";
-    dateInput.value = "";
-    descInput.value = "";
-    editTaskIndex = -1
   }
 
   window.onclick = function (event) {
