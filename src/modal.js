@@ -51,6 +51,8 @@ export function setupTasksModal() {
       dateInput.value = "";
       descInput.value = "";
       editTaskIndex = -1
+    } else {
+      alert("Please fill in all fields, including the date.");
     }
   }
 
@@ -151,6 +153,17 @@ export function setupSort() {
     console.log("PrioritySort!")
     tasks.sort(function(a, b) {
       return priorityOrder[b.getPriority()] - priorityOrder[a.getPriority()];
+    });
+    renderTasks();
+  }
+
+  dateSort.onclick = function (){
+    if (tasks.length === 0) {
+      console.log("No tasks to sort.");
+      return;
+    }
+    task.sort(function (a,b) {
+      return new Date(a.getDueDate()) - new Date(b.getDueDate());
     });
     renderTasks();
   }
