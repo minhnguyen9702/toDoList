@@ -4,14 +4,14 @@ const tasks = []
 let editTaskIndex = -1;
 
 export function setupTasksModal() {
-  var modal = document.getElementById("myModal");
-  var btn = document.getElementById("addTask");
-  var span = document.getElementsByClassName("close")[0];
-  var titleInput = document.getElementById("title");
-  var priorityInput = document.getElementById("priority");
-  var dateInput = document.getElementById("dateInput");
-  var descInput = document.getElementById("desc");
-  var submit = document.getElementById("submitTask");
+  const modal = document.getElementById("myModal");
+  const btn = document.getElementById("addTask");
+  const span = document.getElementsByClassName("close")[0];
+  const titleInput = document.getElementById("title");
+  const priorityInput = document.getElementById("priority");
+  const dateInput = document.getElementById("dateInput");
+  const descInput = document.getElementById("desc");
+  const submit = document.getElementById("submitTask");
 
   btn.onclick = function () {
     modal.style.display = "block";
@@ -27,14 +27,14 @@ export function setupTasksModal() {
   }
 
   submit.onclick = function () {
-    if (titleInput.value != "" && priorityInput.value != "" && dateInput != "") {
+    if (titleInput.value != "" && priorityInput.value != "" && dateInput.value) {
       const newTask = new Task(
         titleInput.value,
         descInput.value,
         dateInput.value,
         priorityInput.value,
       )
-  
+
       if (editTaskIndex >= 0) {
         tasks[editTaskIndex] = newTask;
         console.log("Task Edited: ", newTask);
@@ -44,7 +44,7 @@ export function setupTasksModal() {
       }
       console.log("Current Tasks: ", tasks);
       renderTasks();
-  
+
       modal.style.display = "none";
       titleInput.value = "";
       priorityInput.value = "";
@@ -106,12 +106,12 @@ function renderTasks() {
 }
 
 function openEditModal(index) {
-  var task = tasks[index]
-  var modal = document.getElementById("myModal");
-  var titleInput = document.getElementById("title");
-  var priorityInput = document.getElementById("priority");
-  var dateInput = document.getElementById("dateInput");
-  var descInput = document.getElementById("desc");
+  const task = tasks[index];
+  const modal = document.getElementById("myModal");
+  const titleInput = document.getElementById("title");
+  const priorityInput = document.getElementById("priority");
+  const dateInput = document.getElementById("dateInput");
+  const descInput = document.getElementById("desc");
 
   titleInput.value = task.getTitle();
   priorityInput.value = task.getPriority();
@@ -125,4 +125,33 @@ function openEditModal(index) {
 function deleteTask(index) {
   tasks.splice(index, 1);
   renderTasks();
+}
+
+export function setupSort() {
+  const titleSort = document.getElementById("titleSort");
+  const prioritySort = document.getElementById("prioritySort");
+  const dateSort = document.getElementById("dateSort");
+
+  titleSort.onclick = function () {
+    console.log("Title Sort!")
+    tasks.sort(function(a, b){
+      if (a.getTitle() < b.getTitle()) return -1;
+      if (a.getTitle() > b.getTitle()) return 1;
+      return 0;
+    });
+    renderTasks();
+  }
+
+  const priorityOrder = {
+    high: 3,
+    medium: 2,
+    low: 1,
+  }
+  prioritySort.onclick = function (){
+    console.log("PrioritySort!")
+    tasks.sort(function(a, b) {
+      return priorityOrder[b.getPriority()] - priorityOrder[a.getPriority()];
+    });
+    renderTasks();
+  }
 }
